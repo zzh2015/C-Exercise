@@ -38,7 +38,8 @@ some C++ Primer Exercise
     
     1) shared_ptr 类
         
-    创建智能指针:   shared_ptr<string> p1; //可指向string
+    创建智能指针:   
+                    shared_ptr<string> p1; //可指向string
 
                     shared_ptr<list<int>> p2; //可指向list<int>
     
@@ -48,9 +49,9 @@ some C++ Primer Exercise
 
     在动态内存中分配一个对象，并初始化它，返回指向此对象的 shared_ptr.
     
-    shared_ptr<string> p1 = make_shared<string>(10, '0');
+                     shared_ptr<string> p1 = make_shared<string>(10, '0');
     
-    auto p2 = make_shared<vector<string>> ();
+                     auto p2 = make_shared<vector<string>> ();
     
     3) shared_ptr 通过引用计数管理内存。
 
