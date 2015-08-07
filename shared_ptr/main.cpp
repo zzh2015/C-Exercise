@@ -16,9 +16,11 @@ int main(int argc, char *argv[])
         sb2.push_back("apple");
     }
 
-    for (auto it=(sb.data)->begin(); it!=(sb.data)->end(); ++it) {
+    std::cout << sb.front() << std::endl;
+    for (auto it=sb.begin(); it!=sb.end(); ++it) {
         std::cout << *it << std::endl;
     }
+    std::cout << sb.back() << std::endl;
 
     return 0;
 }

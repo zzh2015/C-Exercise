@@ -1,8 +1,9 @@
 #ifndef __STRBLOB_H__
 #define __STRBLOB_H__
 
-#include <memory>
+#include <iterator>
 #include <list>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -23,9 +24,12 @@ class StrBlob {
         std::string &front();
         std::string &back();
 
-        std::shared_ptr<std::vector<std::string>> data;
+        //返回data迭代器
+        std::vector<std::string>::iterator begin() const {return data->begin();} 
+        std::vector<std::string>::iterator end() const {return data->end();} 
 
     private:
+        std::shared_ptr<std::vector<std::string>> data;
 
         //data[i]不合法,抛出异常
         void check(size_type i, const std::string &msg) const;
