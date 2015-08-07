@@ -6,8 +6,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 class StrBlob {
     public:
         typedef std::vector<std::string>::size_type size_type;
@@ -28,7 +26,6 @@ class StrBlob {
         std::shared_ptr<std::vector<std::string>> data;
 
     private:
-
 
         //data[i]不合法,抛出异常
         void check(size_type i, const std::string &msg) const;

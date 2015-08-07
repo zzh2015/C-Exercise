@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     }
 
     for (auto it=(sb.data)->begin(); it!=(sb.data)->end(); ++it) {
-        cout << *it << endl;
+        std::cout << *it << std::endl;
     }
 
     return 0;
