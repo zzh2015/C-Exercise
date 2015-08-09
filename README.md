@@ -55,6 +55,29 @@ some C++ Primer Exercise
     
     3) shared_ptr 通过引用计数管理内存。
 
+2. shared_ptr 和 new 结合使用
+
+    1) 可以用 new 返回的指针来初始化智能指针 
+
+                shared_ptr<double> p1; //空指针
+
+                shared_ptr<int> p2(new int(1024));  //p2 指向一个值为 42 的 int
+                
+                shared_ptr<int> clone(int p) { return shared_ptr<int>(new int(p)); }
+  
+
+    2) 不要混合使用普通指针和智能指针
+
+                
+
+    
+
+
+
+
+
+
+
     
     
 
