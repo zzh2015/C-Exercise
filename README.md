@@ -69,11 +69,70 @@ some C++ Primer Exercise
     2) 不要混合使用普通指针和智能指针
 
                 
+3. unique_ptr 必须采用直接初始化形式
 
+                unique_ptr<int> p(new int(42)); //p指向一个int
     
+    我们不能拷贝或赋值unique_ptr,但是可以通过release或reset将一个unique_ptr转移到另一个unique_ptr
 
+                unique_ptr<string> p2(p1.release()); //p1置空，转移到p2
 
+                unique_ptr<string> p3(new string("Tex")); p2.reset(p3.release());
 
+                auto p = p3.release();
+
+4. 传递unique_ptr参数 和 返回unique_ptr
+
+                unique_ptr<int> clone(int p) {
+
+                    return unique_ptr<int> (new int(p));
+
+                    //unique_ptr<int> u(new int(p));
+
+                    //return u;
+
+                }
+
+5. weak_ptr
+
+    weak_ptr 绑定到一个 shared_ptr将不会改变 shared_ptr 的计数。
+
+                auto p = make_ptr<int>(42);
+
+                weak_ptr<int> wp(p);
+
+    由于对象可能不存在，调用weak_ptr， 必须调用 lock：
+
+                if (shared_ptr<int> np = wp.lock()) {//np不为空}
+
+6. 动态数组
+    
+    标准库提供了一个可以管理new分配的unique_ptr版本。
+                
+                unique_ptr<int[]> up(new int[10]);
+                
+                up.release(); // 自动销毁
+7. allocator类
+    
+    内存分配和对象构造分离。
+
+                allocator<string> alloc;
+
+                auto const p = alloc.allocate(n); // 分配n个未初始化的string
+                
+                auto q = p;
+    
+                alloc.construct(q++);
+                
+                alloc.construct(q++, 10, 'c');
+
+                alloc.construct(q++, "hi");
+               
+                while (q != p) // 销毁构造的元素 
+                    
+                    alloc.destroy(--q);
+
+                alloc.deallocate(p, n); //释放内存
 
 
 
