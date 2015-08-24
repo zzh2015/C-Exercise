@@ -134,9 +134,90 @@ some C++ Primer Exercise
 
                 alloc.deallocate(p, n); //释放内存
 
+#拷贝控制
+1.一个类通过拷贝构造函数、拷贝赋值运算符、移动构造函数（c++11）、移动赋值运算符（c++11）、析够函数来控制类的拷贝、移动、赋值和销毁。
+
+    1) 拷贝构造函数
+                
+                class Foo {
+                    
+                    public:
+
+                        Foo();
+            
+                        Foo(const Foo&); //额外参数带默认值
+
+                };
+
+                string dots(10, '.'); //直接初始化
+
+                string s = dots;    //拷贝初始化
+
+    拷贝初始化在使用‘=’定义变量、将对象作为实参传递给非引用形参、从一个返回类型为非引用的函数返回一个对象、用花括号列表初始化
+
+    数组或一个聚合类的成员。
+
+    2) 拷贝赋值运算符
+
+                Sales_data trans, accum;
+
+                trans = accum;  //拷贝赋值运算符 
+
+                class Foo {
+                    
+                    public:
+
+                       Foo& Foo(const Foo&);
+
+                };
+
+        注：如果将一个对象赋予它本身，赋值运算符必须正常工作。
+            
+    3) 析够函数
+
+    如果一个类需要自定义析够函数，几乎可以肯定也需要自定义拷贝构造函数和拷贝赋值运算符。
+
+2.使用=default
+
+    使用=default来显式要求编译器生成合成的版本。
+
+                class Sales_data{
+
+                    public:
+                        
+                        Sales_data() = default; //编译器合成，隐式声明为内联
+
+                        Sales_data(const Sales_data &) = default;
+                        
+                        Sales_data& operator=(const Sales_data &);
+                
+                        ~Sales_data() = default;        
+                };
 
 
+                Sales_data& Sales_data::operator=(const Sales_data &) = default; //非内联
 
-    
-    
+                
+3.阻止拷贝
+
+    1) 定义为删除的
+                
+                class Sales_data{
+
+                    public:
+                        
+                        Sales_data();
+
+                        Sales_data(const Sales_data &) = delete;
+                        
+                        Sales_data& operator=(const Sales_data &) = delete;
+                
+                        ~Sales_data() = default;        //析够函数不能使删除的成员
+                };
+
+    2) private拷贝控制
+        
+                
+
+
 
