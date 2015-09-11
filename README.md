@@ -217,7 +217,34 @@ some C++ Primer Exercise
 
     2) private拷贝控制
         
-                
+4.swap
+                class HasPtr{
 
+                    friend void swap(HasPtr&, HasPtr&);
+
+                };                
+
+                inline void swap(HasPtr &lhs, HasPtr &rhs)
+
+                {
+                    using std::swap;
+
+                    swap(lhs.ps, rhs.ps);
+
+                    swap(lhs.i, rhs.i);
+
+                }
+
+    赋值运算符中使用swap
+            
+               HasPtr &HasPtr::operator=(HasPtr lhs) 
+            
+                {
+                                    
+                    swap(*this, lhs);
+
+                    return *this;
+                    
+                }
 
 

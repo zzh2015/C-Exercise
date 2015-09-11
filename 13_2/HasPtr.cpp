@@ -18,7 +18,7 @@ HasPtr& HasPtr::operator=(const HasPtr &rhs)
 
 HasPtr::~HasPtr()
 {
-    if (--(*use)) {
+    if (0 == --(*use)) {
         delete ps;
         delete use;
     }
