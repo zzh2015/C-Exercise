@@ -100,20 +100,9 @@ int main()
 /* 读写锁(共享互斥锁)：读模式加锁(可多个线程占有)、写模式加锁(仅一个线程占有)、不加锁
  * 读写锁适合对数据结构读的次数远大于写的次数。
  * * /
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//pthread_rwlock_t rwlock;
+//int pthread_rwlock_init(&rwlock, NULL);
+//int pthread_rwlock_destroy(&rwlock);
+//int pthread_rwlock_rdlock(&rwlock);
+//int pthread_rwlock_wrlock(&rwlock);
+//int pthread_rwlock_unlock(&rwlock);
