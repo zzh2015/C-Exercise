@@ -13,7 +13,8 @@
 #include <unistd.h>
 
 #define PID_AND_TID 0
-#define EXIT_T_RET 1
+#define EXIT_T_RET 0
+#define BARRIER_DEMO 1
 
 #if PID_AND_TID
 pthread_t g_Tid;
@@ -106,3 +107,57 @@ int main()
 //int pthread_rwlock_rdlock(&rwlock);
 //int pthread_rwlock_wrlock(&rwlock);
 //int pthread_rwlock_unlock(&rwlock);
+/*
+ * 屏障(barrier): 用户协调多个线程并行工作的同步机制。屏障允许每个线程等待，直到所有的合作线程到达某点，然后从该点继续执行。
+ * */
+//use 4 thread product keys
+#if BARRIER_DEMO
+#include <limits.h>
+#include <sys/time.h>
+#include <time.h>
+
+const int KEY_NUM = 4;
+pthread_barrier_t g_Barrier;
+int g_StordKey[KEY_NUM];
+
+void *ThreadFunc(void *arg)
+{
+    long long i = reinterpret_cast<long long>(arg);
+    int idx = static_cast<int>(i);
+    srand((unsigned)time(NULL));
+    g_StordKey[idx] = rand() % 13;
+    printf("Thread No is %d Wait\n", idx);
+    pthread_barrier_wait(&g_Barrier);
+    printf("Thread No is %d Over\n", idx);
+    return (void *)0;
+}
+
+int main()
+{
+    pthread_t tid[KEY_NUM];
+    pthread_barrier_init(&g_Barrier, NULL, KEY_NUM+1);
+    int i = 0;
+    for (i=0; i<KEY_NUM; ++i) {
+        int ret = pthread_create(&tid[i], NULL, ThreadFunc, (void *)i);
+        assert(ret == 0);
+    }
+    
+    pthread_barrier_wait(&g_Barrier);
+    //
+    for (i=0; i<KEY_NUM; ++i) {
+        printf("g_StordKey[%d]: %d\n", i, g_StordKey[i]);
+    }
+
+    for (i=0; i<KEY_NUM; ++i) {
+        g_StordKey[i] *= (i+1);
+    }
+    //
+    for (i=0; i<KEY_NUM; ++i) {
+        printf("g_StordKey[%d]: %d\n", i, g_StordKey[i]);
+    }
+    sleep(1);
+    pthread_barrier_destroy(&g_Barrier);
+    return 0;
+}
+#endif
+
