@@ -8,8 +8,10 @@ git$,以git结尾的行
 ^cat$ 一行仅cat
 ^$ 空行
 ^
+gr[ea]y 匹配 grey,gray
 #排除型字符组
 [^...]代替[...]
+[^1-6] 排除1-6
 #用点号匹配任意字符
 .
 在字符组内部，元字符的定义和意义是不一样的
@@ -21,7 +23,15 @@ git$,以git结尾的行
 |
 [grey|gray]
 ^(From|Subject|Date):
+起始行为From Subject Date
+grep '^(From|Subject|Date):' typescript -Eni
 #egrep -i 不区分大小写
+
+#元字符序列
+\<\>
+\<cat\> 匹配cat
+\<cat 匹配cat开头
+cat\> 匹配cat结尾
 
 #可选项元素
 #color和colour
@@ -45,4 +55,4 @@ grep '\<([a-z]+).+\1\>' reg.txt -En
 
 #匹配24小时制
 grep '([01][0-9]|2[0-3]):[0-5][0-9]' reg.txt -nE
-
+grep '\$[0-9]+\.[0-9][0-9]'
