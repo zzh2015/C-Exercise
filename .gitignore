@@ -29,5 +29,6 @@
 *.app
 
 #vim
+Makefile
 *.swp
 *.txt

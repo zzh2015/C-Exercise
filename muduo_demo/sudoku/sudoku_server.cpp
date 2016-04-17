@@ -11,6 +11,7 @@ FileName: sudoku_server.cpp
 #include <muduo/net/InetAddress.h>
 #include <muduo/net/TcpServer.h>
 
+#include <algorithm>
 #include <functional>
 
 #include <utility>
@@ -56,7 +57,7 @@ class SudokuServer
                     buf->retrieveUntil(crlf + 2);
                     len = buf->readableBytes();
                     if (!processRequest(conn, request)) {
-                        conn->send("Send Request!\r\n");
+                        conn->send("Bad Request!\r\n");
                         conn->shutdown();
                         break;
                     }
@@ -76,9 +77,8 @@ class SudokuServer
             string puzzle;
             bool goodRequest = true;
 
-            auto  colon = find(request.begin(), request.end(), ":");
-            if (true) {
-            //if (colon != request.end()) {
+            auto  colon = std::find(request.begin(), request.end(), ':');
+            if (colon != request.end()) {
                 id.assign(request.begin(), colon);
                 puzzle.assign(colon+1, request.end());
             } else {
@@ -104,6 +104,8 @@ class SudokuServer
         Timestamp m_StartTime;
 };
 
+//b:000000010400000000020000000000050407008000300001090000300400200050100000000806000
+//b:693784512487512936125963874932651487568247391741398625319475268856129743274836159
 int main()
 {
     LOG_INFO << "pid = " << getpid() << ", tid = " << CurrentThread::tid();
