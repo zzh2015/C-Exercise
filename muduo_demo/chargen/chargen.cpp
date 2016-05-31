@@ -26,7 +26,7 @@ ChargenServer::ChargenServer(EventLoop *loop, const InetAddress &listenAddr, boo
     m_Server.setWriteCompleteCallback(
             std::bind(&ChargenServer::onWriteComplete, this, std::placeholders::_1));
     if (print) {
-        //loop->runEvery(3.0, std::bind(&ChargenServer::printThroughput, this));
+        loop->runEvery(3.0, std::bind(&ChargenServer::printThroughput, this));
     }
 
     string line;
